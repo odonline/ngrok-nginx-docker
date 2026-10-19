@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  nginx-switcher:
+    image: nginx:alpine
+    container_name: nginx-switcher
+    ports:
+      - "${SWITCHER_PORT:-3010}:${SWITCHER_PORT:-3010}"
+    volumes:
+      # Nginx core configuration
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      # Fallback landing/status dashboard
+      - ./nginx/html:/usr/share/nginx/html:ro
+    extra_hosts:
+      # Standard Docker host machine alias (works on Docker Desktop for Win/Mac & Docker Engine on Linux)
+      - "host.docker.internal:host-gateway"
+      # Custom internal hostnames mapped to the host machine or LAN IP
+      # Add here any custom domain your local apps respond to
+      - "app1.local:${LOCAL_HOST_IP:-host-gateway}"
+      - "app2.local:${LOCAL_HOST_IP:-host-gateway}"
+    restart: unless-stopped

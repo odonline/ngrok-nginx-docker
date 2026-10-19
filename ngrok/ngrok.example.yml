@@ -1,0 +1,11 @@
+version: "3"
+agent:
+  authtoken: YOUR_NGROK_AUTHTOKEN_HERE
+
+endpoints:
+  - name: my-switcher-endpoint
+    # Replace with your assigned ngrok static domain or leave URL out for a dynamic URL
+    url: https://YOUR-SUBDOMAIN.ngrok-free.app
+    upstream:
+      # Port on host machine pointing to Nginx switcher (matches SWITCHER_PORT)
+      url: 3010
